@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Reduxstagram</title>
+    <link rel="shortcut icon" type="image/png" href="http://wes.io/ehRe/my-favourite-icon.png"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </head>
+
+  <body ng-app="carMarketApp" ng-controller="StoreController as store">
+    <div id="root"></div>
+    <h3>{{2+3}}</h3>
+    <div class="col-md-3">
+      <form>
+        <div class="form-group">
+            <label for="searchCar">Search</label>
+            <input type="text" class="form-control" ng-model="search.model"/>
+            <label for="brandName">Select brand</label>
+            <!-- <select ng-init="defaultItem=brandNames[0]" ng-model="defaultItem" ng-options="brandName for brandName in brandNames" class="form-control" id="exampleSelect1"></select> -->
+            <select class="form-control" id="exampleSelect1"></select>
+            <label for="modelName">Select model</label>
+            <!-- <select ng-init="defaultItem=brandModels[0]" ng-model="defaultItem" ng-options="brandModel for brandModel in brandModels|filter:defaultItem" class="form-control" id="exampleSelect1"></select> -->
+            <select class="form-control" id="exampleSelect1"></select>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-9">
+				<div ng-repeat="car in store.cars.models|filter:search.model">
+          <div class="panel panel-default col-xs-12 col-sm-3"
+               ng-click="store.addToCart(car.id, car.make, car.name)" >
+          <!-- Default panel contents -->
+          <div class="panel-heading">{{car.make}}
+            <span class="glyphicon pull-right glyphicon-star"
+                  ng-class="car.isSelected ? 'glyphicon-star':'glyphicon-star-empty'"></span>
+          </div>
+          <div class="panel-body">
+            <p>{{car.name}}</p>
+          </div>
+          </div>
+				</div>
+    </div>
+
+
+    <script src="/static/bundle.js"></script>
+  </body>
+</html>
