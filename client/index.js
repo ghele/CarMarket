@@ -1,11 +1,25 @@
+// TO-DO: add angular ui bootstrap to package.json
+
 import angular from 'angular';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import uibootstrap from 'angular-ui-bootstrap';
+import uiRouter from 'angular-ui-router';
 
 ReactDOM.render(<h1>Hello</h1>, document.getElementById('root'));
 
 // Declare Car Market Module
-var carMarketApp = angular.module('carMarketApp', []);
+var carMarketApp = angular.module('carMarketApp', [uibootstrap, uiRouter]);
+
+
+    carMarketApp.config(function ($stateProvider, $urlRouterProvider) {
+        $stateProvider
+            .state('login', {
+                url: '/login',
+                templateUrl: '<div>wrg</div>'
+            });
+    });
+
 
 carMarketApp.factory("CarMarketService", ['$http', function($http) {
     var marketData = {};
@@ -34,15 +48,13 @@ carMarketApp.factory("CarMarketService", ['$http', function($http) {
     }
 }]);
 
-carMarketApp.controller("StoreController", ["CarMarketService", function(CarMarketService) {
+carMarketApp.controller("StoreController", ["CarMarketService", "$uibModal", "$log", function(CarMarketService, $uibModal, $log, $document) {
     var vm = this;
 
     CarMarketService.getMarketData().then(function(marketData) {
         vm.cars = marketData;
         vm.cart = [];
     })
-
-
 
     vm.addToCart = function(carId, carName, carModel) {
       var pickedModel = vm.cars.models[carId];
@@ -55,6 +67,7 @@ carMarketApp.controller("StoreController", ["CarMarketService", function(CarMark
       } else { vm.removeCartItem(carId) }
       console.log("drvewrdvfe", vm.cars.models[carId].isSelected);
     }
+
     vm.removeCartItem = function(itemId) {
         console.log("subtract - items", vm.cart);
         var pickedModel = vm.cars.models[itemId];
@@ -65,4 +78,77 @@ carMarketApp.controller("StoreController", ["CarMarketService", function(CarMark
         });
         vm.itemsInCart = vm.cart.length;
     }
+
+    vm.openModal = function(size) {
+        var modalInstance = $uibModal.open({
+            animation: "true",
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            controllerAs: 'modal',
+            size: size,
+            resolve: {
+                itemsInCart: function(){
+                    return vm.itemsInCart;
+                },
+                cart: function () {
+                    return  vm.cart;
+                }
+            }
+        })
+        modalInstance.result.then(function (data) {
+            vm.itemsInCart = null;
+            vm.cars.models.forEach(function(item) {
+                if(item.isSelected == true) {
+                    item.isSelected = false;
+                }
+            })
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+
+        });
+    }
 }]);
+
+carMarketApp.controller('ModalInstanceCtrl', ['$window', '$uibModalInstance', '$log', 'cart', function ($window, $uibModalInstance, $log, cart) {
+
+    var vm = this;
+    vm.cart = cart;
+    vm.itemsInCart = vm.cart.length;
+
+    vm.storeOrder = function () {
+
+        console.log("-------------------",vm.cart);
+        console.log("----------------", vm.user);
+
+        vm.finalOrder = {
+            customerName: vm.user.name,
+            customerEmail: vm.user.mail,
+            customerReview: vm.user.review,
+            orderDescription: vm.cart
+        };
+
+        if (vm.user.name in $window.localStorage){
+            console.log("Please choose another username!");
+        } else {
+            $window.localStorage.setItem(vm.user.name, vm.finalOrder)
+            // $window.location.reload();
+        }
+
+        $uibModalInstance.close();
+
+
+    };
+
+    vm.validateName = function(val){
+        var patt = /^(?!.*([A-Za-z0-9])\1{1})[A-Za-z0-9]{5,}$/;
+        return patt.test(val);
+    }
+
+    vm.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+}]);
+
+

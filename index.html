@@ -13,7 +13,32 @@
   </head>
 
   <body ng-app="carMarketApp" ng-controller="StoreController as store">
-    <div id="root"></div>
+  <script type="text/ng-template" id="myModalContent.html">
+      <div class="modal-header"><h3 class="modal-title" id="modal-title">Order Form</h3></div>
+      <div class="modal-body" id="modal-body">
+          <form name="orderForm" ng-submit="modal.addReview(product)" novalidate>
+              <fieldset class="form-group">
+                  <input type="text" ng-model="modal.user.name" name="name" placeholder="Name" class="form-control"  required>
+                  <p ng-show="!orderForm.name.$setValidity('text', modal.validateName(modal.name)) && orderForm.name.$invalid && !orderForm.name.$pristine" class="help-block">Please enter a minimum five characters length name. For security reasons, the neighbouring characters cannot be the same!</p>
+              </fieldset>
+              <fieldset class="form-group">
+                  <input ng-model="modal.user.mail" type="email"  name="email" class="form-control"  placeholder="jimmyDean@example.org" title="Email" required />
+                  <p ng-show="orderForm.email.$invalid && !orderForm.email.$pristine" class="help-block">Enter a valid email.</p>
+              </fieldset>
+              <fieldset class="form-group">
+                  <textarea ng-model="modal.user.review" name="message" class="form-control" placeholder="Write a short review of the product..." title="Review" required></textarea>
+                  <p ng-show="orderForm.message.$invalid && !orderForm.message.$pristine" class="help-block">Enter a message.</p>
+              </fieldset>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary" type="button" ng-disabled="orderForm.$invalid"  ng-click="modal.storeOrder()">Submit Order</button>
+                  <button class="btn btn-warning" type="button" ng-click="modal.cancel()">Cancel</button>
+              </div>
+              review form is {{orderForm.$valid}}
+          </form>
+      </div>
+  </script>
+  <div ui-view>Raoul Gheletus</div>
+    <div id="root" ui-view>Raoul Gheletus</div>
     <h3>{{2+3}}</h3>
     <div class="col-md-3">
       <form>
@@ -39,7 +64,7 @@
             </div>
             </br>
             <button class="btn btn-lg btn-primary" ng-click="showCart=!showCart" ng-disabled="!store.itemsInCart"><span class="glyphicon glyphicon-shopping-cart"></span> Cart <span ng-if="store.itemsInCart" class="badge">{{store.itemsInCart}}</span></button>
-            <span><button class="btn btn-lg btn-success" ng-disabled="!store.itemsInCart">Complete</button></span>
+            <span><button class="btn btn-lg btn-success" ng-disabled="!store.itemsInCart" ng-click="store.openModal('lg')">Complete</button></span>
         </div>
       </form>
       <div>
