@@ -19,13 +19,24 @@
       <form>
         <div class="form-group">
             <label for="searchCar">Search</label>
-            <input type="text" class="form-control" ng-model="filter.search"/>
-            <label for="brandName">Select brand</label>
-            <!-- <select ng-init="defaultItem=brandNames[0]" ng-model="defaultItem" ng-options="brandName for brandName in brandNames" class="form-control" id="exampleSelect1"></select> -->
-            <select class="form-control" id="exampleSelect1"></select>
-            <label for="modelName">Select model</label>
-            <!-- <select ng-init="defaultItem=brandModels[0]" ng-model="defaultItem" ng-options="brandModel for brandModel in brandModels|filter:defaultItem" class="form-control" id="exampleSelect1"></select> -->
-            <select class="form-control" id="exampleSelect1"></select>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" ng-model="filter.search"/>
+                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>
+            </div>
+            <div>
+                <label for="brandName">Select brand</label>
+                <select class="form-control" id="exampleSelect1" ng-model="filter.make">
+                    <option value="">Select</option>
+                    <option ng-repeat="brand in store.cars.name" ng-value="brand">{{brand}}</option>
+                </select>
+            </div>
+            <div>
+                <label for="modelName">Select model</label>
+                <select class="form-control" id="exampleSelect1" ng-disabled="!filter.make" ng-model="filter.model">
+                    <option value="">Select</option>
+                    <option ng-if="filter.make" ng-repeat="model in store.cars.models|filter:filter.make" ng-value="model.name">{{model.name}}</option>
+                </select>
+            </div>
             </br>
             <button class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> Cart <span ng-if="store.itemsInCart" class="badge">{{store.itemsInCart}}</span></button>
             <span><button class="btn btn-lg btn-success">Complete</button></span>
@@ -33,7 +44,7 @@
       </form>
     </div>
     <div class="col-md-9">
-        <div ng-repeat="car in store.cars.models|filter:filter.search">
+        <div ng-repeat="car in store.cars.models|filter: filter.make|filter:filter.model|filter:filter.search">
           <div class="panel panel-default col-xs-12 col-sm-3"
                ng-click="store.addToCart(car.id, car.make, car.name)" >
           <!-- Default panel contents -->

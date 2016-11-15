@@ -42,8 +42,11 @@ carMarketApp.controller("StoreController", ["CarMarketService", function(CarMark
         vm.cart = [];
     })
 
+
+
     vm.addToCart = function(carId, carName, carModel) {
       var pickedModel = vm.cars.models[carId];
+        console.log(vm.cars.models);
       console.log("drvewrdvfe", vm.cars.models[carId].isSelected);
 
       if(pickedModel.isSelected === false) {
