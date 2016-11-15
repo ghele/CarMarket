@@ -46,23 +46,23 @@ carMarketApp.controller("StoreController", ["CarMarketService", function(CarMark
 
     vm.addToCart = function(carId, carName, carModel) {
       var pickedModel = vm.cars.models[carId];
-        console.log(vm.cars.models);
       console.log("drvewrdvfe", vm.cars.models[carId].isSelected);
-
       if(pickedModel.isSelected === false) {
         vm.cart.push({ id: carId, name: carName, model: carModel });
         vm.itemsInCart = vm.cart.length;
         pickedModel.isSelected = true;
           console.log("add - items", vm.cart);
-      } else {
+      } else { vm.removeCartItem(carId) }
+      console.log("drvewrdvfe", vm.cars.models[carId].isSelected);
+    }
+    vm.removeCartItem = function(itemId) {
+        console.log("subtract - items", vm.cart);
+        var pickedModel = vm.cars.models[itemId];
         pickedModel.isSelected = false;
         vm.cart = vm.cart.filter(function(obj) {
-          return obj.id !== carId;
+            console.log("subtract - items", vm.cart);
+            return obj.id !== itemId;
         });
         vm.itemsInCart = vm.cart.length;
-        console.log("subtract - items", vm.cart);
-      }
-
-      console.log("drvewrdvfe", vm.cars.models[carId].isSelected);
     }
 }]);

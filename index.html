@@ -38,19 +38,35 @@
                 </select>
             </div>
             </br>
-            <button class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> Cart <span ng-if="store.itemsInCart" class="badge">{{store.itemsInCart}}</span></button>
-            <span><button class="btn btn-lg btn-success">Complete</button></span>
+            <button class="btn btn-lg btn-primary" ng-click="showCart=!showCart" ng-disabled="!store.itemsInCart"><span class="glyphicon glyphicon-shopping-cart"></span> Cart <span ng-if="store.itemsInCart" class="badge">{{store.itemsInCart}}</span></button>
+            <span><button class="btn btn-lg btn-success" ng-disabled="!store.itemsInCart">Complete</button></span>
         </div>
       </form>
+      <div>
+        <ul class="list-group" ng-show="showCart">
+            <li class="list-group-item active" ng-if="store.itemsInCart" ng-repeat="item in store.cart">
+                <div class="row">
+                    <div class="col-xs-10" >
+                        <span><b>Brand:</b> {{item.name}} </span><br>
+                        <span><b>Model:</b> {{item.model}} </span>
+                    </div>
+                    <div class="col-xs-1">
+                        <span aria-hidden="true" class="close" ng-click="store.removeCartItem(item.id)" style="font-size:40px;">&times;</span>
+                    </div>
+                    {{item.id}}
+                </div>
+            </li>
+        </ul>
+      </div>
     </div>
     <div class="col-md-9">
         <div ng-repeat="car in store.cars.models|filter: filter.make|filter:filter.model|filter:filter.search">
-          <div class="panel panel-default col-xs-12 col-sm-3"
-               ng-click="store.addToCart(car.id, car.make, car.name)" >
-          <!-- Default panel contents -->
+          <div class="panel panel-default col-xs-12 col-sm-3">
+          <!-- Model panel -->
           <div class="panel-heading">{{car.make}}
             <span class="glyphicon pull-right glyphicon-star"
-                  ng-class="car.isSelected ? 'glyphicon-star':'glyphicon-star-empty'"></span>
+                  ng-class="car.isSelected ? 'glyphicon-star':'glyphicon-star-empty'"
+                  ng-click="store.addToCart(car.id, car.make, car.name)"></span>
           </div>
           <div class="panel-body">
             <p>{{car.name}}</p>
@@ -58,8 +74,6 @@
           </div>
         </div>
     </div>
-
-
     <script src="/static/bundle.js"></script>
   </body>
 </html>
