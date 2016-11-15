@@ -1,4 +1,8 @@
 import angular from 'angular';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(<h1>Hello</h1>, document.getElementById('root'));
 
 // Declare Car Market Module
 var carMarketApp = angular.module('carMarketApp', []);
@@ -36,23 +40,26 @@ carMarketApp.controller("StoreController", ["CarMarketService", function(CarMark
     CarMarketService.getMarketData().then(function(marketData) {
         vm.cars = marketData;
         vm.cart = [];
-        console.log(vm.cars);
     })
 
     vm.addToCart = function(carId, carName, carModel) {
       var pickedModel = vm.cars.models[carId];
       console.log("drvewrdvfe", vm.cars.models[carId].isSelected);
 
-
       if(pickedModel.isSelected === false) {
         vm.cart.push({ id: carId, name: carName, model: carModel });
+        vm.itemsInCart = vm.cart.length;
         pickedModel.isSelected = true;
-      } else { return; }
+          console.log("add - items", vm.cart);
+      } else {
+        pickedModel.isSelected = false;
+        vm.cart = vm.cart.filter(function(obj) {
+          return obj.id !== carId;
+        });
+        vm.itemsInCart = vm.cart.length;
+        console.log("subtract - items", vm.cart);
+      }
 
       console.log("drvewrdvfe", vm.cars.models[carId].isSelected);
-
-      console.log("Cars models -", vm.cars.models);
-      console.log("Cart -", vm.cart);
-      console.log("Cars -", vm.cars);
     }
 }]);

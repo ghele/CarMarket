@@ -19,18 +19,21 @@
       <form>
         <div class="form-group">
             <label for="searchCar">Search</label>
-            <input type="text" class="form-control" ng-model="search.model"/>
+            <input type="text" class="form-control" ng-model="filter.search"/>
             <label for="brandName">Select brand</label>
             <!-- <select ng-init="defaultItem=brandNames[0]" ng-model="defaultItem" ng-options="brandName for brandName in brandNames" class="form-control" id="exampleSelect1"></select> -->
             <select class="form-control" id="exampleSelect1"></select>
             <label for="modelName">Select model</label>
             <!-- <select ng-init="defaultItem=brandModels[0]" ng-model="defaultItem" ng-options="brandModel for brandModel in brandModels|filter:defaultItem" class="form-control" id="exampleSelect1"></select> -->
             <select class="form-control" id="exampleSelect1"></select>
+            </br>
+            <button class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> Cart <span ng-if="store.itemsInCart" class="badge">{{store.itemsInCart}}</span></button>
+            <span><button class="btn btn-lg btn-success">Complete</button></span>
         </div>
       </form>
     </div>
     <div class="col-md-9">
-				<div ng-repeat="car in store.cars.models|filter:search.model">
+        <div ng-repeat="car in store.cars.models|filter:filter.search">
           <div class="panel panel-default col-xs-12 col-sm-3"
                ng-click="store.addToCart(car.id, car.make, car.name)" >
           <!-- Default panel contents -->
@@ -42,7 +45,7 @@
             <p>{{car.name}}</p>
           </div>
           </div>
-				</div>
+        </div>
     </div>
 
 
