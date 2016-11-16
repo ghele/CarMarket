@@ -1,25 +1,13 @@
-// TO-DO: add angular ui bootstrap to package.json
-
+// TO-DO: add angular ui bootstrap to package.json, add axios
 import angular from 'angular';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import uibootstrap from 'angular-ui-bootstrap';
-import uiRouter from 'angular-ui-router';
+import store from './store.js';
 
 ReactDOM.render(<h1>Hello</h1>, document.getElementById('root'));
 
-// Declare Car Market Module
-var carMarketApp = angular.module('carMarketApp', [uibootstrap, uiRouter]);
-
-
-    carMarketApp.config(function ($stateProvider, $urlRouterProvider) {
-        $stateProvider
-            .state('login', {
-                url: '/login',
-                templateUrl: '<div>wrg</div>'
-            });
-    });
-
+var carMarketApp = angular.module('carMarketApp', [uibootstrap]);
 
 carMarketApp.factory("CarMarketService", ['$http', function($http) {
     var marketData = {};
@@ -150,5 +138,3 @@ carMarketApp.controller('ModalInstanceCtrl', ['$window', '$uibModalInstance', '$
         $uibModalInstance.dismiss('cancel');
     };
 }]);
-
-
