@@ -5,7 +5,7 @@ import {ajaxCallBegin, checkCarModel, checkOutCarModel, loadInitialState} from '
 
 let store = createStore(cartManipulation, applyMiddleware(thunk));
 
-console.log( loadInitialState )
+console.log( loadInitialState );
 
 
 store.dispatch(loadInitialState());
