@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Car Market</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.3.0/list.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/2.5.0/fuse.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -15,17 +15,98 @@
   <body>
     <h1>Raoul</h1>
     <div data-ng-app="carMarketApp" data-ng-controller="CarMarketCtrl">
-      <button data-ng-click="getCars()">receiveCarMarket()</button>
+      <!-- {{model.carStore.carData.models}} -->
+      <!-- {{model }} -->
+      <!-- <button data-ng-click="getCars()">receiveCarMarket()</button>
         <ul>
-          <!-- <li data-ng-repeat="item in model.list track by $index">{{ item }}</li> -->
-           {{model.carStore.carData.models}}
+           {{model.carStore.carData.models[0]}}
         </ul>
-      <button data-ng-click="filterAfterSearchField('Hummer')">filterAfterSearchField()</button>
+      <button data-ng-click="filterAfterSearchField('Lege')">filterAfterSearchField()</button>
         <ul>
-          <!-- <li data-ng-repeat="item in model.list track by $index">{{ item }}</li> -->
-           {{model.carStore.carData.models}}
+
+           {{model.carStore.carData.models[0]}}
         </ul>
+      <button data-ng-click="filterAfterBrandDropdown('Acura')">FILTER_AFTER_BRAND_DROPDOWN()</button>
+        <ul>
+
+           {{model.carStore.carData.models[0]}}
+        </ul>
+      <button data-ng-click="filterAfterModelDropdown( { brandDropdown: 'Acura', modelDropdown: 'Legend' })">filterAfterModelDropdown()</button>
+        <ul>
+
+           {{model.carStore.carData.models[0]}}
+        </ul>
+      <button data-ng-click="addRemoveCartItem( { carId: 1, itemModel: 'Legend' } )">addRemoveCartItem()</button>
+        <ul>
+           {{model.carStore.carData.models[0]}}
+        </ul>
+      <button data-ng-click="completeTransaction( )">completeTransaction()</button>
+        <ul>
+           {{model.carStore.carData.models[0]}}
+        </ul>-->
+
+    <div class="col-md-3">
+      <form>
+        <div class="form-group">
+          <label for="searchCar">Search</label>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" ng-model="filter.search" ng-change="filterAfterSearchField(filter.search)" />
+            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>
+          </div>
+          <div>
+            <label for="brandName">Select brand</label>
+            <select class="form-control" id="exampleSelect1" ng-model="filter.make" ng-change="filterAfterBrandDropdown(filter.make)">
+                <option value="">Select</option>
+                <option ng-repeat="brand in model.carStore.carData.name" ng-value="brand">{{brand}}</option>
+            </select>
+          </div>
+          <div>
+            <label for="modelName">Select model</label>
+            <select class="form-control" id="exampleSelect1" ng-disabled="!filter.make" ng-model="filter.model" ng-change="filterAfterModelDropdown( { brandDropdown: filter.make, modelDropdown: filter.model } )">
+                <option value="">Select</option>
+                <option ng-if="filter.make" ng-repeat="model in model.carStore.filteredData" ng-value="model.name">{{model.name}}</option>
+            </select>
+          </div>
+        </br>
+        <button class="btn btn-lg btn-primary" ng-click="showCart=!showCart" ng-disabled=""><span class="glyphicon glyphicon-shopping-cart"></span> Cart <span ng-if="model.carStore.cartData.length" class="badge">{{model.carStore.cartData.length}}</span></button>
+        <span><button class="btn btn-lg btn-success" ng-disabled="!model.carStore.cartData.length" ng-click="">Complete</button></span>
+        </div>
+
+      </form>
+      <div>
+        <ul class="list-group" ng-show="showCart">
+            <li class="list-group-item active" ng-if="model.carStore.cartData.length" ng-repeat="item in model.carStore.cartData">
+                <div class="row">
+                    <div class="col-xs-10" >
+                        <span><b>Brand:</b> {{item.make}} </span><br>
+                        <span><b>Model:</b> {{item.name}} </span>
+                    </div>
+                    <div class="col-xs-1">
+                        <span aria-hidden="true" class="close" ng-click="addRemoveCartItem( { carId: car.id, itemModel: car.name})" style="font-size:40px;">&times;</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+      </div>
     </div>
+
+    <div class="col-md-9">
+      <div ng-repeat="car in model.carStore.filteredData track by $index">
+        <div class="panel panel-default col-xs-12 col-sm-3">
+        <!-- Model panel -->
+        <div class="panel-heading">{{car.make}}
+          <span class="glyphicon pull-right glyphicon-star"
+                ng-class="car.isSelected ? 'glyphicon-star':'glyphicon-star-empty'"
+                ng-click="addRemoveCartItem( { carId: car.id, itemModel: car.name})"></span>
+        </div>
+        <div class="panel-body">
+          <p>{{car.name}}</p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <script src="/static/bundle.js"></script>
     </body>
 </html>
