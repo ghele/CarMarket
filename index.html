@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Car Market</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.3.0/list.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -11,9 +12,20 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </head>
-
-  <body ng-app="carMarketApp">
+  <body>
     <h1>Raoul</h1>
+    <div data-ng-app="carMarketApp" data-ng-controller="CarMarketCtrl">
+      <button data-ng-click="getCars()">receiveCarMarket()</button>
+        <ul>
+          <!-- <li data-ng-repeat="item in model.list track by $index">{{ item }}</li> -->
+           {{model.carStore.carData.models}}
+        </ul>
+      <button data-ng-click="filterAfterSearchField('Hummer')">filterAfterSearchField()</button>
+        <ul>
+          <!-- <li data-ng-repeat="item in model.list track by $index">{{ item }}</li> -->
+           {{model.carStore.carData.models}}
+        </ul>
+    </div>
     <script src="/static/bundle.js"></script>
-  </body>
+    </body>
 </html>
