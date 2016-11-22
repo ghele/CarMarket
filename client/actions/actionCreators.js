@@ -10,22 +10,20 @@ export function receiveCarMarket( carData ) {
 }
 
 export function filterAfterSearchField( searchText ) {
+  let filteredData = [ ];
   const models = store.getState( ).carData.models;
-  // console.log("GET_STATE - FILTER_AFTER_SEARCH_FIELD", store.getState( ).carData.models);
-  // console.log("SEARC_TEXT", searchText);
-  let filteredData = [];
   const options = {
     threshold: 0.3,
     keys: ['name', 'make']
   }
-  const fuse = new Fuse(models, options);
+  const fuse = new Fuse( models, options );
 
   if ( searchText.length != 0 ) {
-    filteredData = fuse.search(searchText);
+    filteredData = fuse.search( searchText );
   } else {
     filteredData = models
   }
-  // console.log("FUSE_SEARCH", fuse.search(searchText));
+
   return {
     type: types.FILTER_AFTER_SEARCH_FIELD,
     searchText,
@@ -34,15 +32,15 @@ export function filterAfterSearchField( searchText ) {
 }
 
 export function filterAfterBrandDropdown( brandDropdown ) {
+  let filteredData = [ ]
   const models = store.getState( ).carData.models;
-  let filteredData = []
 
   if ( brandDropdown.length != 0 ) {
     filteredData = models.filter( ( value ) => { return value.make === brandDropdown } ) ;
   } else {
     filteredData = models
   }
-  console.log("brandDropdown", filteredData);
+
   return {
     type: types.FILTER_AFTER_BRAND_DROPDOWN,
     brandDropdown,
@@ -51,15 +49,16 @@ export function filterAfterBrandDropdown( brandDropdown ) {
 }
 
 export function filterAfterModelDropdown( filterDropdown ) {
-  const models = store.getState( ).carData.models;
   let filteredData = []
+  const models = store.getState( ).carData.models;
 
   if ( filterDropdown.modelDropdown.length != 0 ) {
     filteredData = models.filter( ( value ) => { return value.name === filterDropdown.modelDropdown } ) ;
   } else {
     filteredData = models.filter( ( value ) => { return value.make === filterDropdown.brandDropdown } ) ;
   }
-  console.log("modelDropdown", filteredData);
+  // console.log("modelDropdown", filteredData);
+
   return {
     type: types.FILTER_AFTER_MODEL_DROPDOWN,
     filterDropdown,
@@ -68,12 +67,11 @@ export function filterAfterModelDropdown( filterDropdown ) {
 }
 
 export function addRemoveCartItem( addRemoveItem ) {
-
   let state = store.getState( );
   let carData = store.getState( ).carData;
   let filteredData = store.getState( ).filteredData;
 
-  Object.assign(carData, carData.models[ addRemoveItem.carId ].isSelected = !carData.models[ addRemoveItem.carId ].isSelected );
+  Object.assign( carData, carData.models[ addRemoveItem.carId ].isSelected = !carData.models[ addRemoveItem.carId ].isSelected );
   Object.assign( state, { cartData: carData.models.filter( ( value ) => { return value.isSelected === true } ) }  );
 
   return {
@@ -85,7 +83,6 @@ export function addRemoveCartItem( addRemoveItem ) {
 }
 
 export function completeTransaction( ) {
-
   let carData = { };
 
   carData.models = store.getState( ).carData.models;
@@ -95,8 +92,6 @@ export function completeTransaction( ) {
     value.isSelected = false;
     return value;
   })
-
-
 
   return {
     type: types.COMPLETE_TRANSACTION,

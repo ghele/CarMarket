@@ -16,8 +16,7 @@ const store = createStore( ( state = initialState, action ) => {
     switch( action.type ) {
         case types.RECEIVE_CAR_MARKET:
             return Object.assign(state, { carData: action.carData }, { filteredData: action.carData.models } );
-            // return Object.assign(state, { filters: { searchText: action.name, brandDropdown: "", modelDropdown: "" } }, { carData: action.carData } );
-
+            
         case types.FILTER_AFTER_SEARCH_FIELD:
             console.log("STATE", state);
             return Object.assign( state, { filters: { searchText: action.searchText, brandDropdown: "", modelDropdown: "" } }, { filteredData: action.filteredData } );

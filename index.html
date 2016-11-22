@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Car Market</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/2.5.0/fuse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/2.5.0/fuse.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -11,40 +11,45 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <style>
+        [name="orderForm"] .ng-invalid.ng-dirty{
+         border-color: #fa787e;
+        }
+        [name="orderForm"] .ng-valid.ng-dirty{
+         border-color: #78fa89;
+        }
+        .help-block{
+         color: red;
+        }
+      </style>
   </head>
   <body>
-    <h1>Raoul</h1>
+  </br>
     <div data-ng-app="carMarketApp" data-ng-controller="CarMarketCtrl">
-      <!-- {{model.carStore.carData.models}} -->
-      <!-- {{model }} -->
-      <!-- <button data-ng-click="getCars()">receiveCarMarket()</button>
-        <ul>
-           {{model.carStore.carData.models[0]}}
-        </ul>
-      <button data-ng-click="filterAfterSearchField('Lege')">filterAfterSearchField()</button>
-        <ul>
-
-           {{model.carStore.carData.models[0]}}
-        </ul>
-      <button data-ng-click="filterAfterBrandDropdown('Acura')">FILTER_AFTER_BRAND_DROPDOWN()</button>
-        <ul>
-
-           {{model.carStore.carData.models[0]}}
-        </ul>
-      <button data-ng-click="filterAfterModelDropdown( { brandDropdown: 'Acura', modelDropdown: 'Legend' })">filterAfterModelDropdown()</button>
-        <ul>
-
-           {{model.carStore.carData.models[0]}}
-        </ul>
-      <button data-ng-click="addRemoveCartItem( { carId: 1, itemModel: 'Legend' } )">addRemoveCartItem()</button>
-        <ul>
-           {{model.carStore.carData.models[0]}}
-        </ul>
-      <button data-ng-click="completeTransaction( )">completeTransaction()</button>
-        <ul>
-           {{model.carStore.carData.models[0]}}
-        </ul>-->
-
+      <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header"><h3 class="modal-title" id="modal-title">Order Form</h3></div>
+        <div class="modal-body" id="modal-body">
+          <form name="orderForm" ng-submit="modal.addReview(product)" novalidate>
+              <fieldset class="form-group">
+                  <input type="text" ng-model="modal.user.name" name="name" placeholder="Name" class="form-control"  required>
+                  <p ng-show="!orderForm.name.$setValidity('text', validateName(modal.user.name)) && orderForm.name.$invalid && !orderForm.name.$pristine" class="help-block">Please enter a minimum five characters length name. For security reasons, the neighbouring characters cannot be the same!</p>
+              </fieldset>
+              <fieldset class="form-group">
+                  <input ng-model="modal.user.mail" type="email"  name="email" class="form-control"  placeholder="jimmyDean@example.org" title="Email" required />
+                  <p ng-show="orderForm.email.$invalid && !orderForm.email.$pristine" class="help-block">Enter a valid email.</p>
+              </fieldset>
+              <fieldset class="form-group">
+                  <textarea ng-model="modal.user.review" name="message" class="form-control" placeholder="Write a short review of the product..." title="Review" required></textarea>
+                  <p ng-show="orderForm.message.$invalid && !orderForm.message.$pristine" class="help-block">Enter a message.</p>
+              </fieldset>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary" type="button" ng-disabled="orderForm.$invalid"  ng-click="completeTransaction()">Submit Order</button>
+                  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+              </div>
+              review form is {{orderForm.$valid}} {{modal.validateName(modal.user.name)}}
+          </form>
+        </div>
+      </script>
     <div class="col-md-3">
       <form>
         <div class="form-group">
@@ -69,7 +74,7 @@
           </div>
         </br>
         <button class="btn btn-lg btn-primary" ng-click="showCart=!showCart" ng-disabled=""><span class="glyphicon glyphicon-shopping-cart"></span> Cart <span ng-if="model.carStore.cartData.length" class="badge">{{model.carStore.cartData.length}}</span></button>
-        <span><button class="btn btn-lg btn-success" ng-disabled="!model.carStore.cartData.length" ng-click="">Complete</button></span>
+        <span><button class="btn btn-lg btn-success" ng-disabled="!model.carStore.cartData.length" ng-click="openModal('lg')">Complete</button></span>
         </div>
 
       </form>
