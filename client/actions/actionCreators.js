@@ -68,29 +68,19 @@ export function filterAfterModelDropdown( filterDropdown ) {
 }
 
 export function addRemoveCartItem( addRemoveItem ) {
-  let cartData = [ ];
-  const carData = store.getState( ).carData;
-  const filteredData = store.getState( ).filteredData;
+
+  let state = store.getState( );
+  let carData = store.getState( ).carData;
+  let filteredData = store.getState( ).filteredData;
 
   Object.assign(carData, carData.models[ addRemoveItem.carId ].isSelected = !carData.models[ addRemoveItem.carId ].isSelected );
-  if( carData.models[ addRemoveItem.carId ].isSelected === true ) {
-    cartData.push(filteredData.filter( ( value ) => { return value.name === addRemoveItem.itemModel } ) )
-    console.log("CART_DATA",cartData);
-    // return cartData;
-    console.log("BEFORE", filteredData);
-  } else {
-    filteredData.filter( ( value ) => { return value.name !== addRemoveItem.itemModel } )
-    console.log("AFTER", filteredData);
-  }
-  console.log("CARDATA ", carData);
-  console.log("CARTDATA ", cartData);
-  console.log("FILTERED_DATA", filteredData);
+  Object.assign( state, { cartData: carData.models.filter( ( value ) => { return value.isSelected === true } ) }  );
 
   return {
     type: types.ADD_REMOVE_CART_ITEM,
     carData,
     filteredData,
-    cartData
+    cartData: state.cartData
   }
 }
 
