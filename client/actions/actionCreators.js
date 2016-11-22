@@ -1,54 +1,100 @@
+import {store} from '../reducers/reducer';
+
 import * as types from './actionTypes';
-import axios from 'axios';
 
-export function ajaxCallBegin() {
+export function receiveCarMarket( carData ) {
   return {
-    type: types.AJAX_CALL_BEGIN
+    type: types.RECEIVE_CAR_MARKET,
+    carData
   }
 }
 
-export function checkCarModel() {
- return {
-   type: types.CHECK_CAR_MODEL
- }
-}
+export function filterAfterSearchField( searchText ) {
+  let filteredData = [ ];
+  const models = store.getState( ).carData.models;
+  const options = {
+    threshold: 0.3,
+    keys: ['name', 'make']
+  }
+  const fuse = new Fuse( models, options );
 
-export function checkOutCarModel() {
- return {
-   type: types.CHECKOUT_CAR_MODEL
- }
-}
+  if ( searchText.length != 0 ) {
+    filteredData = fuse.search( searchText );
+  } else {
+    filteredData = models
+  }
 
-export function loadInitialStateSuccess(marketData) {
   return {
-    type: types.AJAX_CALL_SUCCESS,
-    marketData
+    type: types.FILTER_AFTER_SEARCH_FIELD,
+    searchText,
+    filteredData
   }
 }
 
-export function loadInitialState() {
-  return function (dispatch) {
-    return axios.get('http://api.edmunds.com/api/vehicle/v2/makes?fmt=json&api_key=e6jd7d4rx7qx64r5dskzwdwc')
-        .then(function (response) {
-          console.log(loadInitialStateSuccess(response.data.makes));
-          var marketData = {}, id=0;
-          marketData.models = [];
-          marketData.name = [];
-          response.data.makes.forEach(function(entry) {
-              marketData.name.push(entry.name);
-              entry.models.forEach(function(model) {
-                  marketData.models.push({
-                      id: id++,
-                      name: model.name,
-                      make: entry.name,
-                      isSelected: false
-                  });
-              });
-          })
-          dispatch(loadInitialStateSuccess(marketData));
-      })
-        .catch(function (error) {
-          console.log(error);
-      });
-    }
+export function filterAfterBrandDropdown( brandDropdown ) {
+  let filteredData = [ ]
+  const models = store.getState( ).carData.models;
+
+  if ( brandDropdown.length != 0 ) {
+    filteredData = models.filter( ( value ) => { return value.make === brandDropdown } ) ;
+  } else {
+    filteredData = models
+  }
+
+  return {
+    type: types.FILTER_AFTER_BRAND_DROPDOWN,
+    brandDropdown,
+    filteredData
+  }
+}
+
+export function filterAfterModelDropdown( filterDropdown ) {
+  let filteredData = []
+  const models = store.getState( ).carData.models;
+
+  if ( filterDropdown.modelDropdown.length != 0 ) {
+    filteredData = models.filter( ( value ) => { return value.name === filterDropdown.modelDropdown } ) ;
+  } else {
+    filteredData = models.filter( ( value ) => { return value.make === filterDropdown.brandDropdown } ) ;
+  }
+  // console.log("modelDropdown", filteredData);
+
+  return {
+    type: types.FILTER_AFTER_MODEL_DROPDOWN,
+    filterDropdown,
+    filteredData
+  }
+}
+
+export function addRemoveCartItem( addRemoveItem ) {
+  let state = store.getState( );
+  let carData = store.getState( ).carData;
+  let filteredData = store.getState( ).filteredData;
+
+  Object.assign( carData, carData.models[ addRemoveItem.carId ].isSelected = !carData.models[ addRemoveItem.carId ].isSelected );
+  Object.assign( state, { cartData: carData.models.filter( ( value ) => { return value.isSelected === true } ) }  );
+
+  return {
+    type: types.ADD_REMOVE_CART_ITEM,
+    carData,
+    filteredData,
+    cartData: state.cartData
+  }
+}
+
+export function completeTransaction( ) {
+  let carData = { };
+
+  carData.models = store.getState( ).carData.models;
+  carData.name = store.getState( ).carData.name;
+
+  carData.models = carData.models.map (function ( value ) {
+    value.isSelected = false;
+    return value;
+  })
+
+  return {
+    type: types.COMPLETE_TRANSACTION,
+    carData
+  }
 }

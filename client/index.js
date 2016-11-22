@@ -1,73 +1,49 @@
-// TO-DO: add angular ui bootstrap to package.json, add axios
 import angular from 'angular';
-import React from 'react';
-import ReactDOM from 'react-dom';
 import uibootstrap from 'angular-ui-bootstrap';
-import store from './store.js';
+import {store} from './reducers/reducer';
+import {CarMarketService} from './services/service';
+import * as types from './actions/actionTypes';
+import { receiveCarMarket,
+         filterAfterSearchField,
+         filterAfterBrandDropdown,
+         filterAfterModelDropdown,
+         addRemoveCartItem,
+         completeTransaction } from './actions/actionCreators';
 
-ReactDOM.render(<h1>Hello</h1>, document.getElementById('root'));
+const carMarketApp = angular.module( 'carMarketApp', [ uibootstrap ] )
 
-var carMarketApp = angular.module('carMarketApp', [uibootstrap]);
+carMarketApp.controller( 'CarMarketCtrl', ( $scope, CarMarketFactory, store, $uibModal, $log) => {
+    $scope.model = { }
 
-carMarketApp.factory("CarMarketService", ['$http', function($http) {
-    var marketData = {};
-    marketData.models = [];
-    marketData.name = [];
-    var getMarketData = function(){
-        return $http.get("http://api.edmunds.com/api/vehicle/v2/makes?fmt=json&api_key=e6jd7d4rx7qx64r5dskzwdwc")
-            .then(function(response) {
-                var id = 0;
-                response.data.makes.forEach(function(entry) {
-                    marketData.name.push(entry.name);
-                    entry.models.forEach(function(model) {
-                        marketData.models.push({
-                            id: id++,
-                            name: model.name,
-                            make: entry.name,
-                            isSelected: false
-                        });
-                    });
-                })
-                return marketData;
-            })
+    store.subscribe( ( ) => {
+        Object.assign( $scope.model, { carStore: store.getState( ) } )
+
+        console.log("GET_STATE - INDEX", store.getState( ));
+    } )
+
+    $scope.getCars = ( ) => {
+        CarMarketFactory.getMarketCars( )
+            .then( carData => store.dispatch( receiveCarMarket( carData ) ) )
     }
-    return {
-        getMarketData: getMarketData
-    }
-}]);
+    $scope.getCars();
 
-carMarketApp.controller("StoreController", ["CarMarketService", "$uibModal", "$log", function(CarMarketService, $uibModal, $log, $document) {
-    var vm = this;
-
-    CarMarketService.getMarketData().then(function(marketData) {
-        vm.cars = marketData;
-        vm.cart = [];
-    })
-
-    vm.addToCart = function(carId, carName, carModel) {
-      var pickedModel = vm.cars.models[carId];
-      console.log("drvewrdvfe", vm.cars.models[carId].isSelected);
-      if(pickedModel.isSelected === false) {
-        vm.cart.push({ id: carId, name: carName, model: carModel });
-        vm.itemsInCart = vm.cart.length;
-        pickedModel.isSelected = true;
-          console.log("add - items", vm.cart);
-      } else { vm.removeCartItem(carId) }
-      console.log("drvewrdvfe", vm.cars.models[carId].isSelected);
+    $scope.filterAfterSearchField = ( searchText ) => {
+        store.dispatch( filterAfterSearchField( searchText ) )
     }
 
-    vm.removeCartItem = function(itemId) {
-        console.log("subtract - items", vm.cart);
-        var pickedModel = vm.cars.models[itemId];
-        pickedModel.isSelected = false;
-        vm.cart = vm.cart.filter(function(obj) {
-            console.log("subtract - items", vm.cart);
-            return obj.id !== itemId;
-        });
-        vm.itemsInCart = vm.cart.length;
+    $scope.filterAfterBrandDropdown = ( brandDropdown ) => {
+        store.dispatch( filterAfterBrandDropdown( brandDropdown ) )
     }
 
-    vm.openModal = function(size) {
+    $scope.filterAfterModelDropdown = ( filterDropdown ) => {
+        store.dispatch( filterAfterModelDropdown( filterDropdown ) )
+    }
+
+    $scope.addRemoveCartItem = ( addRemoveItem ) => {
+        store.dispatch( addRemoveCartItem( addRemoveItem ) )
+    }
+
+    $scope.openModal = function(size) {
         var modalInstance = $uibModal.open({
             animation: "true",
             ariaLabelledBy: 'modal-title',
@@ -77,64 +53,43 @@ carMarketApp.controller("StoreController", ["CarMarketService", "$uibModal", "$l
             controllerAs: 'modal',
             size: size,
             resolve: {
-                itemsInCart: function(){
-                    return vm.itemsInCart;
-                },
                 cart: function () {
-                    return  vm.cart;
+                    return store.cartData;
                 }
             }
         })
         modalInstance.result.then(function (data) {
-            vm.itemsInCart = null;
-            vm.cars.models.forEach(function(item) {
-                if(item.isSelected == true) {
-                    item.isSelected = false;
-                }
-            })
+          return;
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
 
         });
     }
-}]);
+} )
 
-carMarketApp.controller('ModalInstanceCtrl', ['$window', '$uibModalInstance', '$log', 'cart', function ($window, $uibModalInstance, $log, cart) {
+carMarketApp.controller( 'ModalInstanceCtrl', ( $scope, $window, $uibModalInstance, $log, cart) => {
+    $scope.cart = cart;
 
-    var vm = this;
-    vm.cart = cart;
-    vm.itemsInCart = vm.cart.length;
-
-    vm.storeOrder = function () {
-
-        console.log("-------------------",vm.cart);
-        console.log("----------------", vm.user);
-
-        vm.finalOrder = {
-            customerName: vm.user.name,
-            customerEmail: vm.user.mail,
-            customerReview: vm.user.review,
-            orderDescription: vm.cart
-        };
-
-        if (vm.user.name in $window.localStorage){
-            console.log("Please choose another username!");
-        } else {
-            $window.localStorage.setItem(vm.user.name, vm.finalOrder)
-            // $window.location.reload();
-        }
-
+    $scope.completeTransaction = ( ) => {
         $uibModalInstance.close();
+        store.dispatch( completeTransaction( ) )
+    }
 
-
-    };
-
-    vm.validateName = function(val){
+    $scope.validateName = function(val){
         var patt = /^(?!.*([A-Za-z0-9])\1{1})[A-Za-z0-9]{5,}$/;
         return patt.test(val);
     }
 
-    vm.cancel = function () {
+    $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-}]);
+});
+
+carMarketApp.value( 'store', store )
+
+carMarketApp.factory( 'CarMarketFactory', $http => {
+    return CarMarketService( ( method, url ) => {
+        return $http[ method.toLowerCase( ) ]( url )
+            .then( response => response.data )
+    } )
+} )
