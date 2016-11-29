@@ -16,7 +16,6 @@ const CarMarketService = httpProvider => {
                       } );
                   } );
               } )
-              console.log("sdfwero", marketData);
               return marketData;
           } )
     }

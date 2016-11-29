@@ -16,9 +16,7 @@ carMarketApp.controller( 'CarMarketCtrl', ( $scope, CarMarketFactory, store, $ui
     $scope.model = { }
 
     store.subscribe( ( ) => {
-        Object.assign( $scope.model, { carStore: store.getState( ) } )
-
-        console.log("GET_STATE - INDEX", store.getState( ));
+        Object.assign($scope.model, { carStore: store.getState( ) } )
     } )
 
     $scope.getCars = ( ) => {

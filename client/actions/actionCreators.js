@@ -1,5 +1,4 @@
 import {store} from '../reducers/reducer';
-
 import * as types from './actionTypes';
 
 export function receiveCarMarket( carData ) {
@@ -57,7 +56,6 @@ export function filterAfterModelDropdown( filterDropdown ) {
   } else {
     filteredData = models.filter( ( value ) => { return value.make === filterDropdown.brandDropdown } ) ;
   }
-  // console.log("modelDropdown", filteredData);
 
   return {
     type: types.FILTER_AFTER_MODEL_DROPDOWN,

@@ -46,7 +46,6 @@
                   <button type="submit" class="btn btn-primary" type="button" ng-disabled="orderForm.$invalid"  ng-click="completeTransaction()">Submit Order</button>
                   <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
               </div>
-              review form is {{orderForm.$valid}} {{modal.validateName(modal.user.name)}}
           </form>
         </div>
       </script>
@@ -55,12 +54,12 @@
         <div class="form-group">
           <label for="searchCar">Search</label>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" ng-model="filter.search" ng-change="filterAfterSearchField(filter.search)" />
+            <input type="text" class="form-control" placeholder="Search" ng-disabled="filter.make" ng-model="filter.search" ng-change="filterAfterSearchField(filter.search)" />
             <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>
           </div>
           <div>
             <label for="brandName">Select brand</label>
-            <select class="form-control" id="exampleSelect1" ng-model="filter.make" ng-change="filterAfterBrandDropdown(filter.make)">
+            <select class="form-control" id="exampleSelect1" ng-disabled="filter.search" ng-model="filter.make" ng-change="filterAfterBrandDropdown(filter.make)">
                 <option value="">Select</option>
                 <option ng-repeat="brand in model.carStore.carData.name" ng-value="brand">{{brand}}</option>
             </select>
@@ -76,7 +75,6 @@
         <button class="btn btn-lg btn-primary" ng-click="showCart=!showCart" ng-disabled=""><span class="glyphicon glyphicon-shopping-cart"></span> Cart <span ng-if="model.carStore.cartData.length" class="badge">{{model.carStore.cartData.length}}</span></button>
         <span><button class="btn btn-lg btn-success" ng-disabled="!model.carStore.cartData.length" ng-click="openModal('lg')">Complete</button></span>
         </div>
-
       </form>
       <div>
         <ul class="list-group" ng-show="showCart">
