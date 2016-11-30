@@ -1,0 +1,33 @@
+import React from 'react';
+import Criteria from '../layouts/Criteria';
+import Cart from '../views/Cart';
+import TransactionButtons from '../views/TransactionButtons';
+
+const SearchForm = React.createClass( {
+  componentDidMount: function() {
+    function ternaryFunction() {
+      if ( 1 === 1) {
+        console.log("wef");
+      } else {
+        console.log("weasdf");
+      }
+    }
+  },
+  render() {
+    return (
+      <div className="col-md-3">
+        <form>
+          <div className="form-group">
+            <Criteria />
+            <br/>
+            <TransactionButtons />
+            <button onClick={this.ternaryFunction}>Button</button>
+          </div>
+          <Cart />
+        </form>
+      </div>
+    );
+  }
+} );
+
+export default SearchForm;
