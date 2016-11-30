@@ -2,116 +2,12 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Car Market</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/2.5.0/fuse.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <style>
-        [name="orderForm"] .ng-invalid.ng-dirty{
-         border-color: #fa787e;
-        }
-        [name="orderForm"] .ng-valid.ng-dirty{
-         border-color: #78fa89;
-        }
-        .help-block{
-         color: red;
-        }
-      </style>
+    <title>Car Handler</title>
+    <link rel="shortcut icon" type="image/png" href="http://wes.io/ehRe/my-favourite-icon.png"/>
+
   </head>
   <body>
-  </br>
-    <div data-ng-app="carMarketApp" data-ng-controller="CarMarketCtrl">
-      <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header"><h3 class="modal-title" id="modal-title">Order Form</h3></div>
-        <div class="modal-body" id="modal-body">
-          <form name="orderForm" ng-submit="modal.addReview(product)" novalidate>
-              <fieldset class="form-group">
-                  <input type="text" ng-model="modal.user.name" name="name" placeholder="Name" class="form-control"  required>
-                  <p ng-show="!orderForm.name.$setValidity('text', validateName(modal.user.name)) && orderForm.name.$invalid && !orderForm.name.$pristine" class="help-block">Please enter a minimum five characters length name. For security reasons, the neighbouring characters cannot be the same!</p>
-              </fieldset>
-              <fieldset class="form-group">
-                  <input ng-model="modal.user.mail" type="email"  name="email" class="form-control"  placeholder="jimmyDean@example.org" title="Email" required />
-                  <p ng-show="orderForm.email.$invalid && !orderForm.email.$pristine" class="help-block">Enter a valid email.</p>
-              </fieldset>
-              <fieldset class="form-group">
-                  <textarea ng-model="modal.user.review" name="message" class="form-control" placeholder="Write a short review of the product..." title="Review" required></textarea>
-                  <p ng-show="orderForm.message.$invalid && !orderForm.message.$pristine" class="help-block">Enter a message.</p>
-              </fieldset>
-              <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary" type="button" ng-disabled="orderForm.$invalid"  ng-click="completeTransaction()">Submit Order</button>
-                  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-              </div>
-              review form is {{orderForm.$valid}} {{modal.validateName(modal.user.name)}}
-          </form>
-        </div>
-      </script>
-    <div class="col-md-3">
-      <form>
-        <div class="form-group">
-          <label for="searchCar">Search</label>
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" ng-model="filter.search" ng-change="filterAfterSearchField(filter.search)" />
-            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>
-          </div>
-          <div>
-            <label for="brandName">Select brand</label>
-            <select class="form-control" id="exampleSelect1" ng-model="filter.make" ng-change="filterAfterBrandDropdown(filter.make)">
-                <option value="">Select</option>
-                <option ng-repeat="brand in model.carStore.carData.name" ng-value="brand">{{brand}}</option>
-            </select>
-          </div>
-          <div>
-            <label for="modelName">Select model</label>
-            <select class="form-control" id="exampleSelect1" ng-disabled="!filter.make" ng-model="filter.model" ng-change="filterAfterModelDropdown( { brandDropdown: filter.make, modelDropdown: filter.model } )">
-                <option value="">Select</option>
-                <option ng-if="filter.make" ng-repeat="model in model.carStore.filteredData" ng-value="model.name">{{model.name}}</option>
-            </select>
-          </div>
-        </br>
-        <button class="btn btn-lg btn-primary" ng-click="showCart=!showCart" ng-disabled=""><span class="glyphicon glyphicon-shopping-cart"></span> Cart <span ng-if="model.carStore.cartData.length" class="badge">{{model.carStore.cartData.length}}</span></button>
-        <span><button class="btn btn-lg btn-success" ng-disabled="!model.carStore.cartData.length" ng-click="openModal('lg')">Complete</button></span>
-        </div>
-
-      </form>
-      <div>
-        <ul class="list-group" ng-show="showCart">
-            <li class="list-group-item active" ng-if="model.carStore.cartData.length" ng-repeat="item in model.carStore.cartData">
-                <div class="row">
-                    <div class="col-xs-10" >
-                        <span><b>Brand:</b> {{item.make}} </span><br>
-                        <span><b>Model:</b> {{item.name}} </span>
-                    </div>
-                    <div class="col-xs-1">
-                        <span aria-hidden="true" class="close" ng-click="addRemoveCartItem( { carId: item.id, itemModel: item.name})" style="font-size:40px;">&times;</span>
-                    </div>
-                </div>
-            </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="col-md-9">
-      <div ng-repeat="car in model.carStore.filteredData track by $index">
-        <div class="panel panel-default col-xs-12 col-sm-3">
-        <!-- Model panel -->
-        <div class="panel-heading">{{car.make}}
-          <span class="glyphicon pull-right glyphicon-star"
-                ng-class="car.isSelected ? 'glyphicon-star':'glyphicon-star-empty'"
-                ng-click="addRemoveCartItem( { carId: car.id, itemModel: car.name})"></span>
-        </div>
-        <div class="panel-body">
-          <p>{{car.name}}</p>
-        </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+    <div id="root"></div>
     <script src="/static/bundle.js"></script>
-    </body>
+  </body>
 </html>
