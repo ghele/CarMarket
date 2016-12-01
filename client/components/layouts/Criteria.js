@@ -5,16 +5,16 @@ import ModelDropDown from '../views/ModelDropDown';
 
 const Criteria = React.createClass( {
   getData () {
-    const raoul = this.props.posts
+    const raoul = this.props
     console.log("Searc",raoul);
   },
-  render() {
+  render( ) {
     return (
       <div>
         <SearchField />
         <BrandDropDown />
         <ModelDropDown />
-        <button onClick={this.getData}>Press</button>
+        <button onClick={this.getData}>Criteria</button>
       </div>
     );
   }

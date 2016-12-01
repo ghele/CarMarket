@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchForm from './SearchForm';
+import MarketItems from './MarketItems';
 
 const Main = React.createClass( {
   getData () {
@@ -9,8 +10,9 @@ const Main = React.createClass( {
   render() {
     return (
       <div>
-        <SearchForm />
-        <button onClick={this.getData}>Press</button>
+        <SearchForm {...this.props} />
+        <button onClick={this.getData}>Main</button>
+        <MarketItems {...this.props} />
       </div>
     );
   }

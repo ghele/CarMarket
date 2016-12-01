@@ -4,17 +4,21 @@ import Cart from '../views/Cart';
 import TransactionButtons from '../views/TransactionButtons';
 
 const SearchForm = React.createClass( {
+  getData () {
+    const raoul = this.props
+    console.log("this.props SearchForm",raoul);
+  },
   render() {
     return (
       <div className="col-md-3">
 
           <div className="form-group">
-            <Criteria />
+            <Criteria {...this.props}/>
             <br/>
             <TransactionButtons />
           </div>
           <Cart />
-          
+<button onClick={this.getData}>Search Form</button>
 
 
 
