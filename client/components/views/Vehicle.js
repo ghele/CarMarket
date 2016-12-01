@@ -13,7 +13,7 @@ const Vehicle = React.createClass( {
         </div>
         <div className="panel-body">
           <p>{this.props.post.name}</p>
-        </div>        
+        </div>
       </div>
     );
   }

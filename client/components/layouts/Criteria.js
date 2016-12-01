@@ -12,8 +12,8 @@ const Criteria = React.createClass( {
     return (
       <div>
         <SearchField />
-        <BrandDropDown />
-        <ModelDropDown />
+        <BrandDropDown {...this.props} />
+        <ModelDropDown {...this.props} />
         <button onClick={this.getData}>Criteria</button>
       </div>
     );
