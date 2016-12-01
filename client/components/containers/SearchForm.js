@@ -7,14 +7,17 @@ const SearchForm = React.createClass( {
   render() {
     return (
       <div className="col-md-3">
-        <form>
+
           <div className="form-group">
             <Criteria />
             <br/>
             <TransactionButtons />
           </div>
           <Cart />
-        </form>
+          
+
+
+
       </div>
     );
   }
