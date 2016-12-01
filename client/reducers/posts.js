@@ -15,7 +15,6 @@ export function posts( state = initialState, action ) {
       })
 
     case types.RECEIVE_POSTS:
-      console.log(state);
       return Object.assign({}, state, {
         isFetching: false,
         items: action.posts,

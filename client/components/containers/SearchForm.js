@@ -4,15 +4,6 @@ import Cart from '../views/Cart';
 import TransactionButtons from '../views/TransactionButtons';
 
 const SearchForm = React.createClass( {
-  componentDidMount: function() {
-    function ternaryFunction() {
-      if ( 1 === 1) {
-        console.log("wef");
-      } else {
-        console.log("weasdf");
-      }
-    }
-  },
   render() {
     return (
       <div className="col-md-3">
@@ -21,7 +12,6 @@ const SearchForm = React.createClass( {
             <Criteria />
             <br/>
             <TransactionButtons />
-            <button onClick={this.ternaryFunction}>Button</button>
           </div>
           <Cart />
         </form>

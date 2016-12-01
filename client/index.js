@@ -3,14 +3,14 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import fetchPosts from './actions/actionCreators'
 import Main from './components/containers/Main';
 
-import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
-import { createStore, applyMiddleware } from 'redux'
-import { fetchPosts } from './actions/actionCreators'
-import rootReducer from './reducers/index'
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger';
+import { createStore, applyMiddleware } from 'redux';
+import { fetchPosts } from './actions/actionCreators/posts';
+import { filterAfterSearchField } from './actions/actionCreators/search';
+import rootReducer from './reducers/index';
 
 ReactDOM.render( <Main />, document.getElementById('root'))
 
@@ -28,6 +28,8 @@ const store = createStore(
 store.dispatch(fetchPosts()).then(() =>
   console.log(store.getState())
 )
+
+store.dispatch( filterAfterSearchField ('Hummer') );
 
 // const initialState = {
 //   posts: {
