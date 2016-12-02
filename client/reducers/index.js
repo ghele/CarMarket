@@ -67,6 +67,26 @@ export function rootReducer( state = initialState, action ) {
         filteredVehicles: action.filteredVehicles
       } )
 
+    case types.TOGGLE_VEHICLE:
+      return Object.assign({}, state, {
+        posts: {
+          isFetching: action.isFetching,
+          items: {
+            models:
+              state.posts.items.models.slice( 0, action.vehicleId )
+              .concat( [ {
+                id: action.vehicleId,
+                make: action.make,
+                name: action.name,
+                isSelected: !action.isSelected
+              } ] )
+              .concat( state.posts.items.models.slice( action.vehicleId + 1 ) ),
+            name: action.names
+          },
+          lastUpdated: action.lastUpdated
+        }
+      } )
+
     default:
       return state
   }

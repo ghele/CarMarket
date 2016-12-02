@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 import * as types from '../actionTypes';
+import store from '../../store';
 
 export function requestPosts( ) {
   return {
@@ -46,5 +47,23 @@ export function fetchPosts( ) {
       }
       )
 
+  }
+}
+
+// TO-DO: Put in a separate file
+export function toggleVehicle( vehicleId ) {
+  const { isFetching, lastUpdated } = store.getState( ).posts;
+  const names = store.getState( ).posts.items.name;
+  const { make, name, isSelected } = store.getState( ).posts.items.models[vehicleId];
+
+  return {
+    type: types.TOGGLE_VEHICLE,
+    isFetching,
+    lastUpdated,
+    names,
+    vehicleId,
+    name,
+    make,
+    isSelected
   }
 }
