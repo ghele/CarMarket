@@ -9,11 +9,10 @@ const Vehicles = React.createClass( {
   render( ) {
     return (
       <div>
-        { !this.props.posts.isFetching ? this.props.posts.items.models.map( ( post, i ) => <Vehicle {...this.props} key={post.id} post={post} /> ) : true }
+        { !this.props.posts.isFetching ? this.props.filteredVehicles.map( ( item, i ) => <Vehicle {...this.props} key={item.id} item={item} /> ) : true }
         <button onClick={this.getData}>Vehicles</button>
       </div>
     );
-
   }
 } );
 

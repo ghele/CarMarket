@@ -7,7 +7,8 @@ import Main from './containers/Main';
 function mapStateToProps(state) {
   return {
     posts: state.posts,
-    search: state.search
+    search: state.search,
+    filteredVehicles: state.filteredVehicles 
   }
 }
 

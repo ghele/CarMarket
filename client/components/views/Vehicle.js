@@ -8,11 +8,11 @@ const Vehicle = React.createClass( {
   render( ) {
     return (
       <div className="panel panel-default col-xs-12 col-sm-3">
-        <div className="panel-heading"> {this.props.post.make}
+        <div className="panel-heading"> {this.props.item.make}
           <span className="glyphicon pull-right glyphicon-star"></span>
         </div>
         <div className="panel-body">
-          <p>{this.props.post.name}</p>
+          <p>{this.props.item.name}</p>
         </div>
       </div>
     );
