@@ -44,7 +44,7 @@ export function rootReducer( state = initialState, action ) {
           brandDropdown: '',
           modelDropdown: ''
         },
-        filteredVehicles: [ ]
+        filteredVehicles: action.filteredVehicles
       } )
 
     case types.FILTER_AFTER_BRAND_DROPDOWN:
@@ -61,10 +61,10 @@ export function rootReducer( state = initialState, action ) {
       return Object.assign({}, state, {
         search: {
           searchText: '',
-          brandDropdown: action.filterDropdown.brandDropdown,
-          modelDropdown: action.filterDropdown.modelDropdown
+          brandDropdown: action.filterDropdown.brandName,
+          modelDropdown: action.filterDropdown.modelName
         },
-        filteredVehicles: [ ]
+        filteredVehicles: action.filteredVehicles
       } )
 
     default:

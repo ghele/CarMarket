@@ -11,7 +11,7 @@ const Criteria = React.createClass( {
   render( ) {
     return (
       <div>
-        <SearchField />
+        <SearchField {...this.props} />
         <BrandDropDown {...this.props} />
         <ModelDropDown {...this.props} />
         <button onClick={this.getData}>Criteria</button>

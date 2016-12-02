@@ -9,16 +9,21 @@ const ModelDropDown = React.createClass( {
     console.log("Submitting the form");
     console.log(this.props.search.brandDropdown);
     console.log(this.refs.modelName.value);
+    const brandName = this.props.search.brandDropdown;
     const modelName = this.refs.modelName.value;
-    this.props.filterAfterModelDropdown(modelName);
+    const modelDropdownCriteria = {
+      brandName,
+      modelName
+    }
+    this.props.filterAfterModelDropdown(modelDropdownCriteria);
   },
   render( ) {
     return (
       <div>
         <label htmlFor="modelName">Select model</label>
-        <select className="form-control" ref="modelName" onChange={this.handleOnChange}>
+        <select className="form-control" ref="modelName" onChange={this.handleOnChange} disabled={!this.props.search.brandDropdown}>
             <option value="">Select</option>
-            { !this.props.posts.isFetching ? this.props.posts.items.models.map( ( model ) => <option key={model.id}>{model.name}</option> ) : true }
+            { !this.props.posts.isFetching ? this.props.filteredVehicles.map( ( model ) => <option key={model.id}>{model.name}</option> ) : true }
         </select>
         <button onClick={this.getData}>ModelDropDown</button>
       </div>

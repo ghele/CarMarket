@@ -17,7 +17,7 @@ const BrandDropDown = React.createClass( {
     return (
       <div>
         <label htmlFor="brandName">Select brand</label>
-        <select className="form-control" ref="brandName" onChange={this.handleOnChange}>
+        <select className="form-control" ref="brandName" onChange={this.handleOnChange} disabled={this.props.search.searchText}>
             <option value="">Select</option>
             { !this.props.posts.isFetching ? this.props.posts.items.name.map( ( name, i ) => <option key={i}>{name}</option> ) : true }
         </select>
