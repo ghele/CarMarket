@@ -50,6 +50,7 @@ export function fetchPosts( ) {
   }
 }
 
+// http://stackoverflow.com/questions/35362460/replace-array-item-with-another-one-without-mutating-state
 // TO-DO: Put in a separate file
 export function toggleVehicle( vehicleId ) {
   const { isFetching, lastUpdated } = store.getState( ).posts;
