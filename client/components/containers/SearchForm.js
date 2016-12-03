@@ -1,6 +1,5 @@
 import React from 'react';
 import Criteria from '../layouts/Criteria';
-import Cart from '../views/Cart';
 import TransactionButtons from '../views/TransactionButtons';
 
 const SearchForm = React.createClass( {
@@ -17,7 +16,6 @@ const SearchForm = React.createClass( {
             <br/>
             <TransactionButtons {...this.props} />
           </div>
-          <Cart />
 <button onClick={this.getData}>Search Form</button>
 
 
