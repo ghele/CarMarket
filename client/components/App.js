@@ -8,7 +8,8 @@ function mapStateToProps(state) {
   return {
     posts: state.posts,
     search: state.search,
-    filteredVehicles: state.filteredVehicles 
+    filteredVehicles: state.filteredVehicles,
+    cart: state.cart
   }
 }
 

@@ -11,7 +11,8 @@ const initialState = {
     brandDropdown: '',
     modelDropdown: ''
   },
-  filteredVehicles: [ ]
+  filteredVehicles: [ ],
+  cart: [ ]
 }
 
 export function rootReducer( state = initialState, action ) {
@@ -24,7 +25,8 @@ export function rootReducer( state = initialState, action ) {
           lastUpdated: 0,
           items: { }
         },
-        filteredVehicles: [ ]
+        filteredVehicles: [ ],
+        cart: [ ]
       } )
 
     case types.RECEIVE_POSTS:
@@ -85,6 +87,11 @@ export function rootReducer( state = initialState, action ) {
           },
           lastUpdated: action.lastUpdated
         }
+      } )
+
+    case types.TOGGLE_CART:
+      return Object.assign({}, state, {
+        cart: state.posts.items.models.filter( ( value ) => { return value.isSelected === true } )
       } )
 
     default:

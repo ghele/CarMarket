@@ -13,9 +13,9 @@ const SearchForm = React.createClass( {
       <div className="col-md-3">
 
           <div className="form-group">
-            <Criteria {...this.props}/>
+            <Criteria {...this.props} />
             <br/>
-            <TransactionButtons />
+            <TransactionButtons {...this.props} />
           </div>
           <Cart />
 <button onClick={this.getData}>Search Form</button>

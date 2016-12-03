@@ -56,7 +56,7 @@ export function toggleVehicle( vehicleId ) {
   const { isFetching, lastUpdated } = store.getState( ).posts;
   const names = store.getState( ).posts.items.name;
   const { make, name, isSelected } = store.getState( ).posts.items.models[vehicleId];
-
+  console.log("lastUpdated", lastUpdated);
   return {
     type: types.TOGGLE_VEHICLE,
     isFetching,
@@ -66,5 +66,16 @@ export function toggleVehicle( vehicleId ) {
     name,
     make,
     isSelected
+  }
+}
+
+export function toggleCart( vehicleId ) {
+  const { isFetching, lastUpdated } = store.getState( ).posts;
+  const names = store.getState( ).posts.items.name;
+  const { make, name, isSelected } = store.getState( ).posts.items.models[vehicleId];
+
+  return {
+    type: types.TOGGLE_CART,
+    names
   }
 }
