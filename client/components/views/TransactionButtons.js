@@ -26,6 +26,7 @@ const TransactionButtons = React.createClass( {
       isValidUsername: true,
       isValidEmail: true,
       isValidComment: true });
+      this.props.completeTransaction();
   },
   open ( ) {
     this.setState({ showModal: true });

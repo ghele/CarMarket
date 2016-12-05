@@ -79,3 +79,25 @@ export function toggleCart( vehicleId ) {
     names
   }
 }
+
+export function completeTransaction ( ) {
+  const { isFetching, lastUpdated } = store.getState( ).posts;
+  let { models, name } = store.getState( ).posts.items;
+
+  models = models.map (function ( item ) {
+    item.isSelected = false;
+    return item;
+  })
+
+  let items = {
+    name,
+    models
+  }
+
+  return {
+    type: types.COMPLETE_TRANSACTION,
+    isFetching,
+    lastUpdated,
+    items
+  }
+}

@@ -89,9 +89,21 @@ export function rootReducer( state = initialState, action ) {
         }
       } )
 
+// TO-DO: Make deconstruction on actions
+
     case types.TOGGLE_CART:
       return Object.assign({}, state, {
         cart: state.posts.items.models.filter( ( value ) => { return value.isSelected === true } )
+      } )
+
+    case types.COMPLETE_TRANSACTION:
+      return Object.assign({}, state, {
+        posts: {
+          isFetching: action.isFetching,
+          items: action.items,
+          lastUpdated: action.lastUpdated
+        },
+        cart: [ ]
       } )
 
     default:
