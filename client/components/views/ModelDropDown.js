@@ -1,5 +1,6 @@
 import React from 'react';
 
+// ModelDropDown
 const ModelDropDown = React.createClass( {
   handleOnChange( ) {
     const brandName = this.props.search.brandDropdown;
@@ -8,7 +9,8 @@ const ModelDropDown = React.createClass( {
       brandName,
       modelName
     };
-    
+
+    // call the specific search action creator
     this.props.filterAfterModelDropdown(modelDropdownCriteria);
   },
   render( ) {

@@ -3,12 +3,14 @@ import fetch from 'isomorphic-fetch';
 import {POSTS} from '../actionTypes';
 import store from '../../store';
 
+// Request the API data
 export function requestPosts( ) {
   return {
     type: POSTS.REQUEST_POSTS
   }
 }
 
+// Receive the API data
 export function receivePosts( json ) {
   return {
     type: POSTS.RECEIVE_POSTS,
@@ -17,8 +19,8 @@ export function receivePosts( json ) {
   }
 }
 
+// Fetch the API data
 export function fetchPosts( ) {
-  console.log("POSTS", POSTS.RECEIVE_POSTS);
   const edmundsAPI = 'http://api.edmunds.com/api/vehicle/v2';
   let id = 0;
   let marketData = {
@@ -50,4 +52,3 @@ export function fetchPosts( ) {
 }
 
 // http://stackoverflow.com/questions/35362460/replace-array-item-with-another-one-without-mutating-state
-// TO-DO: Put in a separate file

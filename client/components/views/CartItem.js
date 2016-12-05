@@ -1,9 +1,11 @@
 import React from 'react';
 
+// CartItem
 const CartItem = React.createClass( {
   handleOnClick ( ) {
     const {id} = this.props.item;
 
+    // call the transaction action creators
     this.props.toggleVehicle(id);
     this.props.toggleCart(id);
   },

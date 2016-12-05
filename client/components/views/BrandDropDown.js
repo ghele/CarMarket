@@ -1,9 +1,11 @@
 import React from 'react';
 
+// BrandDropDown
 const BrandDropDown = React.createClass( {
   handleOnChange( ) {
     const brandName = this.refs.brandName.value;
 
+    // call the specific search action creator
     this.props.filterAfterBrandDropdown(brandName);
   },
   render( ) {

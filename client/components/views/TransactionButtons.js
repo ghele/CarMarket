@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import CartItem from './CartItem';
 
+//TransactionButtons
 const TransactionButtons = React.createClass( {
   // Component's initial state
   getInitialState ( ) {
@@ -38,6 +39,7 @@ const TransactionButtons = React.createClass( {
       isValidUsername: true,
       isValidEmail: true,
       isValidComment: true });
+    // call the complete transaction action creator
     this.props.completeTransaction();
     this.setState(this.getInitialState());
   },
@@ -106,7 +108,7 @@ const TransactionButtons = React.createClass( {
                                     { !this.props.posts.isFetching ? this.props.cart.map( ( item, i ) => <CartItem {...this.props} key={item.id} item={item} /> ) : true }
                                   </div> ) : null}
                                   <div>
-          {/* Modal form wit react-bootstrap */}
+          {/* Modal form with react-bootstrap */}
           <Modal show={this.state.showModal} onHide={this.close}>
             <Modal.Header closeButton>
               <Modal.Title>Order form</Modal.Title>

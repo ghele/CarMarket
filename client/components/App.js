@@ -7,6 +7,7 @@ import * as transactionsActionCreators from '../actions/actionCreators/transacti
 
 import Main from './containers/Main';
 
+// mapStateToProps
 function mapStateToProps(state) {
   const  { posts, search, filteredVehicles, cart } = state;
 
@@ -18,10 +19,12 @@ function mapStateToProps(state) {
   }
 }
 
+// mapDispatchToProps
 function mapDispatchToProps(dispatch) {
   return bindActionCreators( Object.assign( { }, postsActionCreators, searchActionCreators, transactionsActionCreators ), dispatch );
 }
 
+// connect
 const App = connect(mapStateToProps, mapDispatchToProps)(Main);
 
 export default App;

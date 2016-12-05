@@ -3,6 +3,7 @@ import Fuse from 'fuse.js';
 import {SEARCH} from '../actionTypes';
 import store from '../../store';
 
+// Criterion: the seach field
 export function filterAfterSearchField( searchText ) {
   let filteredVehicles = [ ];
   const models = store.getState( ).posts.items.models;
@@ -25,6 +26,7 @@ export function filterAfterSearchField( searchText ) {
   }
 }
 
+// Criterion: the brand drop down
 export function filterAfterBrandDropdown( brandDropdown ) {
   let filteredVehicles = [ ];
   const models = store.getState( ).posts.items.models;
@@ -42,6 +44,7 @@ export function filterAfterBrandDropdown( brandDropdown ) {
   }
 }
 
+// Criterion: the brand and model drop downs
 export function filterAfterModelDropdown( filterDropdown ) {
   let filteredVehicles = [ ];
   const models = store.getState( ).posts.items.models;

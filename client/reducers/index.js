@@ -1,5 +1,6 @@
 import { POSTS, SEARCH, TRANSACTIONS } from '../actions/actionTypes';
 
+// Initial state
 const initialState = {
   posts: {
     isFetching: false,
@@ -15,6 +16,7 @@ const initialState = {
   cart: [ ]
 }
 
+// Root reducer
 export function rootReducer( state = initialState, action ) {
   const { receivedAt,
           posts,

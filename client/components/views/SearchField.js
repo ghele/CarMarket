@@ -1,9 +1,11 @@
 import React from 'react';
 
+// SearchField
 const SearchField = React.createClass( {
   handleOnChange( ) {
     const searchText = this.refs.searchText.value;
 
+    // call the specific search acion creator
     this.props.filterAfterSearchField(searchText);
   },
   render( ) {

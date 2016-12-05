@@ -7,10 +7,11 @@ import css from './styles/style.styl';
 import store from './store';
 import App from './components/App';
 
-const router = (
+// Connect the sore to the Provider
+const carHandler = (
   <Provider store={store}>
     <App />
   </Provider>
 );
 
-ReactDOM.render(router, document.getElementById('root'));
+ReactDOM.render(carHandler, document.getElementById('root'));

@@ -2,6 +2,7 @@ import {TRANSACTIONS} from '../actionTypes';
 
 import store from '../../store';
 
+// Empty/full star
 export function toggleVehicle( vehicleId ) {
   const { isFetching, lastUpdated } = store.getState( ).posts;
   const names = store.getState( ).posts.items.name;
@@ -19,6 +20,7 @@ export function toggleVehicle( vehicleId ) {
   }
 }
 
+// Add/Remove item to/from cart based on the isSelected flag
 export function toggleCart( vehicleId ) {
   const { isFetching, lastUpdated } = store.getState( ).posts;
   const names = store.getState( ).posts.items.name;
@@ -30,6 +32,7 @@ export function toggleCart( vehicleId ) {
   }
 }
 
+// Submit the modal form
 export function completeTransaction ( ) {
   const { isFetching, lastUpdated } = store.getState( ).posts;
   let { models, name } = store.getState( ).posts.items;

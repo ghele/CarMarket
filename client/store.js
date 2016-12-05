@@ -19,8 +19,6 @@ const store = createStore (
 )
 
 // Get car market data
-store.dispatch( fetchPosts( ) ).then( ( ) =>
-  console.log("store.getState()", store.getState())
-)
+store.dispatch( fetchPosts( ) );
 
 export default store;

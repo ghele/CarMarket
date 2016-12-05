@@ -1,10 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
+// Vehicle
 const Vehicle = React.createClass( {
   handleOnClick ( ) {
     const {id} = this.props.item;
 
+    // call the transaction action creators
     this.props.toggleVehicle(id);
     this.props.toggleCart(id);
   },
