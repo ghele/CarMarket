@@ -36,7 +36,7 @@ export function rootReducer( state = initialState, action ) {
 
     // Posts
     case POSTS.REQUEST_POSTS:
-      return Object.assign( { }, state, {
+      return { ...state,
         posts: {
           isFetching: true,
           lastUpdated: 0,
@@ -44,56 +44,56 @@ export function rootReducer( state = initialState, action ) {
         },
         filteredVehicles: [ ],
         cart: [ ]
-      } )
+      }
 
     case POSTS.RECEIVE_POSTS:
       const {models} = action.posts;
 
-      return Object.assign( { }, state, {
+      return { ...state,
         posts: {
           isFetching: false,
           lastUpdated: receivedAt,
           items: posts
         },
         filteredVehicles: models
-      } )
+      }
 
     // Search
     case SEARCH.FILTER_AFTER_SEARCH_FIELD:
-      return Object.assign( { }, state, {
+      return { ...state,
         search: {
           searchText,
           brandDropdown: '',
           modelDropdown: ''
         },
         filteredVehicles
-      } )
+      }
 
     case SEARCH.FILTER_AFTER_BRAND_DROPDOWN:
-      return Object.assign( { }, state, {
+      return { ...state,
         search: {
           searchText: '',
           brandDropdown,
           modelDropdown: ''
         },
         filteredVehicles
-      } )
+      }
 
     case SEARCH.FILTER_AFTER_MODEL_DROPDOWN:
       const { brandName, modelName } = action.filterDropdown;
 
-      return Object.assign( { }, state, {
+      return { ...state,
         search: {
           searchText: '',
           brandDropdown: brandName,
           modelDropdown: modelName
         },
         filteredVehicles
-      } )
+      }
 
     // Transactions
     case TRANSACTIONS.TOGGLE_VEHICLE:
-      return Object.assign( { }, state, {
+      return { ...state,
         posts: {
           isFetching,
           items: {
@@ -110,22 +110,23 @@ export function rootReducer( state = initialState, action ) {
           },
           lastUpdated
         }
-      } )
+      }
+
 
     case TRANSACTIONS.TOGGLE_CART:
-      return Object.assign( { }, state, {
+      return { ...state,
         cart: state.posts.items.models.filter( ( value ) => { return value.isSelected === true } )
-      } )
+      }
 
     case TRANSACTIONS.COMPLETE_TRANSACTION:
-      return Object.assign( { }, state, {
+      return { ...state,
         posts: {
           isFetching,
           items,
           lastUpdated
         },
         cart: [ ]
-      } )
+      }
 
     default:
       return state
