@@ -26,7 +26,16 @@ const TransactionButtons = React.createClass( {
       isValidUsername: true,
       isValidEmail: true,
       isValidComment: true });
-      this.props.completeTransaction();
+    this.setState(this.getInitialState());
+  },
+  handleSubmit ( ) {
+    this.setState({
+      showModal: false,
+      isValidUsername: true,
+      isValidEmail: true,
+      isValidComment: true });
+    this.props.completeTransaction();
+    this.setState(this.getInitialState());
   },
   open ( ) {
     this.setState({ showModal: true });
@@ -125,7 +134,7 @@ const TransactionButtons = React.createClass( {
               </form>
             </Modal.Body>
             <Modal.Footer>
-              <Button bsClass="btn btn-success" onClick={this.close} disabled={isDisabled}>Submit order</Button>
+              <Button bsClass="btn btn-success" onClick={this.handleSubmit} disabled={isDisabled}>Submit order</Button>
               <Button bsClass="btn btn-warning" onClick={this.close}>Close</Button>
             </Modal.Footer>
           </Modal>
