@@ -6,8 +6,10 @@ import { fetchPosts } from './actions/actionCreators/posts';
 import { filterAfterSearchField } from './actions/actionCreators/search';
 import rootReducer from './reducers/index';
 
+// loggerMiddleware
 const loggerMiddleware = createLogger();
 
+// Create store with rootReducer and middleware
 const store = createStore (
   rootReducer,
   applyMiddleware (
@@ -16,6 +18,7 @@ const store = createStore (
   )
 )
 
+// Get car market data
 store.dispatch( fetchPosts( ) ).then( ( ) =>
   console.log("store.getState()", store.getState())
 )

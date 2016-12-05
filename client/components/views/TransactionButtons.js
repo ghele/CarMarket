@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import CartItem from './CartItem';
 
 const TransactionButtons = React.createClass( {
+  // Component's initial state
   getInitialState ( ) {
     return {
       showCart: false,
@@ -17,6 +18,11 @@ const TransactionButtons = React.createClass( {
       isValidComment: true
     };
   },
+  // Open the modal form
+  open ( ) {
+    this.setState({ showModal: true });
+  },
+  // Close the modal form
   close ( ) {
     this.setState({
       showModal: false,
@@ -25,6 +31,7 @@ const TransactionButtons = React.createClass( {
       isValidComment: true });
     this.setState(this.getInitialState());
   },
+  // Submit the selected items
   handleSubmit ( ) {
     this.setState({
       showModal: false,
@@ -34,12 +41,11 @@ const TransactionButtons = React.createClass( {
     this.props.completeTransaction();
     this.setState(this.getInitialState());
   },
-  open ( ) {
-    this.setState({ showModal: true });
-  },
+  // Toggle the cart
   handleOnClick ( ) {
     this.setState({ showCart: !this.state.showCart });
   },
+  // Username validation
   handleUsernameValidation ( e ) {
     const username = e.target.value;
     const usernamePattern = /^(?!.*([A-Za-z0-9])\1{1})[A-Za-z0-9]{5,}$/;
@@ -47,6 +53,7 @@ const TransactionButtons = React.createClass( {
     this.setState({ username,
                     isValidUsername });
   },
+  // Email validation
   handleEmailValidation ( e ) {
     const email = e.target.value;
     const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -54,12 +61,14 @@ const TransactionButtons = React.createClass( {
     this.setState({ email,
                     isValidEmail });
   },
+  // Comments validation
   handleCommentsValidation ( e ) {
     const comments = e.target.value;
     this.setState({ comments,
                     isValidComment: ( ( comments.length >= 10 ) ? true : false )
                   });
   },
+  // Template for the modal fields
   FieldGroup({ id, label, placeholder, ...props }) {
     return (
       <FormGroup controlId={id}>
@@ -72,8 +81,8 @@ const TransactionButtons = React.createClass( {
     const {cart} = this.props;
     const { username, email, comments, isValidUsername, isValidEmail, isValidComment } = this.state;
     const isDisabled = (username.length && email.length && comments.length && isValidUsername && isValidEmail && isValidComment) ? false : true;
-    console.log("isDisabled",isDisabled);
 
+    // Toggle 'error' class on the modal form's fields depending on the validation's status
     const validateUsernameInput = classNames( {
       'error': !this.state.isValidUsername
     } );
@@ -83,6 +92,7 @@ const TransactionButtons = React.createClass( {
     const validateCommentsInput = classNames( {
       'error': !this.state.isValidComment
     } );
+
     return (
       <div>
         <button className="btn btn-lg btn-primary" onClick={this.handleOnClick}>
@@ -96,6 +106,7 @@ const TransactionButtons = React.createClass( {
                                     { !this.props.posts.isFetching ? this.props.cart.map( ( item, i ) => <CartItem {...this.props} key={item.id} item={item} /> ) : true }
                                   </div> ) : null}
                                   <div>
+          {/* Modal form wit react-bootstrap */}
           <Modal show={this.state.showModal} onHide={this.close}>
             <Modal.Header closeButton>
               <Modal.Title>Order form</Modal.Title>
@@ -133,6 +144,7 @@ const TransactionButtons = React.createClass( {
               <Button bsClass="btn btn-warning" onClick={this.close}>Close</Button>
             </Modal.Footer>
           </Modal>
+          {/* Modal form */}
         </div>
       </div>
     );

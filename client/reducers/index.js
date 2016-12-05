@@ -16,11 +16,23 @@ const initialState = {
 }
 
 export function rootReducer( state = initialState, action ) {
-
-  const { receivedAt, posts, items, names, vehicleId, isFetching, lastUpdated, make, name, isSelected, searchText, brandDropdown, filteredVehicles } = action;
+  const { receivedAt,
+          posts,
+          items,
+          names,
+          vehicleId,
+          isFetching,
+          lastUpdated,
+          make,
+          name,
+          isSelected,
+          searchText,
+          brandDropdown,
+          filteredVehicles } = action;
 
   switch (action.type) {
 
+    // Posts
     case types.REQUEST_POSTS:
       return Object.assign( { }, state, {
         posts: {
@@ -44,6 +56,7 @@ export function rootReducer( state = initialState, action ) {
         filteredVehicles: models
       } )
 
+    // Search
     case types.FILTER_AFTER_SEARCH_FIELD:
       return Object.assign( { }, state, {
         search: {
@@ -76,6 +89,7 @@ export function rootReducer( state = initialState, action ) {
         filteredVehicles
       } )
 
+    // Transactions
     case types.TOGGLE_VEHICLE:
       return Object.assign( { }, state, {
         posts: {
