@@ -3,6 +3,7 @@ import React from 'react';
 const CartItem = React.createClass( {
   handleOnClick ( ) {
     const {id} = this.props.item;
+
     this.props.toggleVehicle(id);
     this.props.toggleCart(id);
   },

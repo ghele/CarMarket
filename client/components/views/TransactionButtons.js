@@ -1,13 +1,10 @@
 import React from 'react';
+import { Modal, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import classNames from 'classnames';
-import { Modal, Popover, Tooltip, Button, OverlayTrigger, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+
 import CartItem from './CartItem';
 
 const TransactionButtons = React.createClass( {
-  getData ( ) {
-    const raoul = this.state;
-    console.log("SearchField", raoul);
-  },
   getInitialState ( ) {
     return {
       showCart: false,
@@ -93,14 +90,12 @@ const TransactionButtons = React.createClass( {
           { cart.length ? <span className="badge">{cart.length}</span> : false }
         </button>&nbsp;
         <span>
-        <button onClick={this.getData}>SearchField</button>
           <button className="btn btn-lg btn-success" onClick={this.open} disabled={!cart.length}>Complete</button>
         </span>
         {this.state.showCart ?  ( <div>
                                     { !this.props.posts.isFetching ? this.props.cart.map( ( item, i ) => <CartItem {...this.props} key={item.id} item={item} /> ) : true }
                                   </div> ) : null}
                                   <div>
-          <p>Click to get the full Modal experience!</p>
           <Modal show={this.state.showModal} onHide={this.close}>
             <Modal.Header closeButton>
               <Modal.Title>Order form</Modal.Title>

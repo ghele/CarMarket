@@ -1,4 +1,5 @@
-import Fuse from 'fuse.js'
+import Fuse from 'fuse.js';
+
 import * as types from '../actionTypes';
 import store from '../../store';
 
@@ -10,7 +11,7 @@ export function filterAfterSearchField( searchText ) {
     keys: ['name', 'make']
   }
   const fuse = new Fuse( models, options );
- console.log("FUSE", fuse);
+
   if ( searchText.length != 0 ) {
     filteredVehicles = fuse.search( searchText );
   } else {

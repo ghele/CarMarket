@@ -1,5 +1,5 @@
-import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
+
 import * as types from '../actionTypes';
 import store from '../../store';
 
@@ -19,7 +19,6 @@ export function receivePosts( json ) {
 
 export function fetchPosts( ) {
   const edmundsAPI = 'http://api.edmunds.com/api/vehicle/v2';
-
   let id = 0;
   let marketData = {
     models: [ ],
@@ -46,7 +45,6 @@ export function fetchPosts( ) {
         dispatch( receivePosts( marketData ) )
       }
       )
-
   }
 }
 
@@ -56,7 +54,7 @@ export function toggleVehicle( vehicleId ) {
   const { isFetching, lastUpdated } = store.getState( ).posts;
   const names = store.getState( ).posts.items.name;
   const { make, name, isSelected } = store.getState( ).posts.items.models[vehicleId];
-  console.log("lastUpdated", lastUpdated);
+
   return {
     type: types.TOGGLE_VEHICLE,
     isFetching,
@@ -87,8 +85,8 @@ export function completeTransaction ( ) {
   models = models.map (function ( item ) {
     item.isSelected = false;
     return item;
-  })
-
+  });
+  
   let items = {
     name,
     models
