@@ -1,4 +1,4 @@
-import * as types from '../actions/actionTypes';
+import { POSTS, SEARCH, TRANSACTIONS } from '../actions/actionTypes';
 
 const initialState = {
   posts: {
@@ -33,7 +33,7 @@ export function rootReducer( state = initialState, action ) {
   switch (action.type) {
 
     // Posts
-    case types.REQUEST_POSTS:
+    case POSTS.REQUEST_POSTS:
       return Object.assign( { }, state, {
         posts: {
           isFetching: true,
@@ -44,7 +44,7 @@ export function rootReducer( state = initialState, action ) {
         cart: [ ]
       } )
 
-    case types.RECEIVE_POSTS:
+    case POSTS.RECEIVE_POSTS:
       const {models} = action.posts;
 
       return Object.assign( { }, state, {
@@ -57,7 +57,7 @@ export function rootReducer( state = initialState, action ) {
       } )
 
     // Search
-    case types.FILTER_AFTER_SEARCH_FIELD:
+    case SEARCH.FILTER_AFTER_SEARCH_FIELD:
       return Object.assign( { }, state, {
         search: {
           searchText,
@@ -67,7 +67,7 @@ export function rootReducer( state = initialState, action ) {
         filteredVehicles
       } )
 
-    case types.FILTER_AFTER_BRAND_DROPDOWN:
+    case SEARCH.FILTER_AFTER_BRAND_DROPDOWN:
       return Object.assign( { }, state, {
         search: {
           searchText: '',
@@ -77,7 +77,7 @@ export function rootReducer( state = initialState, action ) {
         filteredVehicles
       } )
 
-    case types.FILTER_AFTER_MODEL_DROPDOWN:
+    case SEARCH.FILTER_AFTER_MODEL_DROPDOWN:
       const { brandName, modelName } = action.filterDropdown;
 
       return Object.assign( { }, state, {
@@ -90,7 +90,7 @@ export function rootReducer( state = initialState, action ) {
       } )
 
     // Transactions
-    case types.TOGGLE_VEHICLE:
+    case TRANSACTIONS.TOGGLE_VEHICLE:
       return Object.assign( { }, state, {
         posts: {
           isFetching,
@@ -110,12 +110,12 @@ export function rootReducer( state = initialState, action ) {
         }
       } )
 
-    case types.TOGGLE_CART:
+    case TRANSACTIONS.TOGGLE_CART:
       return Object.assign( { }, state, {
         cart: state.posts.items.models.filter( ( value ) => { return value.isSelected === true } )
       } )
 
-    case types.COMPLETE_TRANSACTION:
+    case TRANSACTIONS.COMPLETE_TRANSACTION:
       return Object.assign( { }, state, {
         posts: {
           isFetching,

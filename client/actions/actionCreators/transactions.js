@@ -1,4 +1,4 @@
-import * as types from '../actionTypes';
+import {TRANSACTIONS} from '../actionTypes';
 
 import store from '../../store';
 
@@ -8,7 +8,7 @@ export function toggleVehicle( vehicleId ) {
   const { make, name, isSelected } = store.getState( ).posts.items.models[vehicleId];
 
   return {
-    type: types.TOGGLE_VEHICLE,
+    type: TRANSACTIONS.TOGGLE_VEHICLE,
     isFetching,
     lastUpdated,
     names,
@@ -25,7 +25,7 @@ export function toggleCart( vehicleId ) {
   const { make, name, isSelected } = store.getState( ).posts.items.models[vehicleId];
 
   return {
-    type: types.TOGGLE_CART,
+    type: TRANSACTIONS.TOGGLE_CART,
     names
   }
 }
@@ -45,7 +45,7 @@ export function completeTransaction ( ) {
   }
 
   return {
-    type: types.COMPLETE_TRANSACTION,
+    type: TRANSACTIONS.COMPLETE_TRANSACTION,
     isFetching,
     lastUpdated,
     items

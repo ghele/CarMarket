@@ -1,23 +1,24 @@
 import fetch from 'isomorphic-fetch';
 
-import * as types from '../actionTypes';
+import {POSTS} from '../actionTypes';
 import store from '../../store';
 
 export function requestPosts( ) {
   return {
-    type: types.REQUEST_POSTS
+    type: POSTS.REQUEST_POSTS
   }
 }
 
 export function receivePosts( json ) {
   return {
-    type: types.RECEIVE_POSTS,
+    type: POSTS.RECEIVE_POSTS,
     posts: json,
     receivedAt: Date.now()
   }
 }
 
 export function fetchPosts( ) {
+  console.log("POSTS", POSTS.RECEIVE_POSTS);
   const edmundsAPI = 'http://api.edmunds.com/api/vehicle/v2';
   let id = 0;
   let marketData = {
