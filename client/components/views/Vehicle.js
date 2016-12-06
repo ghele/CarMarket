@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 
 // Vehicle
@@ -28,5 +28,9 @@ const Vehicle = React.createClass( {
     );
   }
 } );
+
+Vehicle.propTypes = {
+  item: PropTypes.object.isRequired
+};
 
 export default Vehicle;
